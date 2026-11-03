@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SIT Simulator – Sterile Insect Technique Agent-Based Model</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Sterile Insect Technique Simulator</h1>
+    <p class="sub">
+      An agent-based model of humans, wild mosquitoes and sterile males on a 2D grid. Run a control and an intervention side by side to see how releasing sterile males suppresses mosquito populations and disease spread[cite: 3, 4, 7].
+    </p>
+    <nav role="tablist" id="tabs"></nav>
+  </header>
+
+  <main>
+    <!-- SIMULATOR VIEW -->
+    <section id="sim">
+      <div class="layout">
+        <div class="card" id="ctl">
+          <h2>Parameters</h2>
+          <p class="note">Changing any value resets the run.</p>
+        </div>
+
+        <div>
+          <div class="bar ui">
+            <span class="seg" role="group" aria-label="Scenario shown on grid">
+              <button class="btn" id="vctl" aria-pressed="false">Control</button>
+              <button class="btn" id="vexp" aria-pressed="true">Experimental</button>
+            </span>
+            <button class="btn pri" id="play">Play</button>
+            <button class="btn" id="stepb">Step 1 day</button>
+            <button class="btn" id="runall">Run to end</button>
+            <button class="btn" id="resetb">Reset</button>
+            <span class="seg" role="group" aria-label="Speed">
+              <button class="btn" data-sp="1" aria-pressed="true">1x</button>
+              <button class="btn" data-sp="2" aria-pressed="false">2x</button>
+              <button class="btn" data-sp="5" aria-pressed="false">5x</button>
+            </span>
+          </div>
+
+          <div class="metrics" id="metrics"></div>
+
+          <div class="stage">
+            <canvas class="grid" id="cv" width="640" height="640" role="img" aria-label="Simulation grid"></canvas>
+            
+            <div class="card">
+              <h3>Legend</h3>
+              <ul class="legend">
+                <li><i class="dot" style="background:var(--hs)"></i>Human, susceptible</li>
+                <li><i class="dot" style="background:var(--hi)"></i>Human, infected</li>
+                <li><i class="dot" style="background:var(--hr)"></i>Human, recovered</li>
+                <li><i class="dot" style="background:var(--wild); border-radius:50%"></i>Wild mosquito</li>
+                <li><i class="dot" style="background:var(--ster); transform:rotate(45deg) scale(.8)"></i>Sterile male</li>
+                <li><i class="dot" style="border:2px solid var(--hi); border-radius:50%"></i>New infection (bite)</li>
+                <li><i class="dot" style="background:var(--hs); border-radius:50%; opacity:.5"></i>Offspring (wild + wild)</li>
+                <li><i class="dot" style="color:var(--ster); font-weight:800; line-height:12px; text-align:center">×</i>Mating disrupted (wild + sterile)</li>
+                <li><i class="dot" style="background:var(--mute); width:5px; height:5px; border-radius:50%"></i>Death</li>
+              </ul>
+              <p class="note" id="evsum"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS VIEW -->
+    <section id="res" hidden>
+      <div class="card sev" id="sev"></div>
+      
+      <div class="bar ui" style="margin-top: 14px">
+        <button class="btn" id="savebtn">Save this run for comparison</button>
+        <button class="btn" id="csvbtn">Export CSV</button>
+        <button class="btn" id="clrbtn">Clear saved runs</button>
+        <span class="note">PNG export is on each chart.</span>
+      </div>
+
+      <div class="charts" id="charts"></div>
+
+      <div class="card" style="margin-top: 14px">
+        <h3>Saved runs</h3>
+        <div class="tw" id="saved">
+          <p class="note">No saved runs yet. Finish a run, then save it to compare different release settings.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT VIEW -->
+    <section id="about" hidden>
+      <div class="prose">
+        <h2>About the research</h2>
+        <p>Mosquitoes spread dengue, Zika and malaria[cite: 2]. Because vaccines and treatments are limited for some of these diseases, controlling the vector is a main line of defence[cite: 2]. Insecticides work, but resistance builds up and non-target species suffer[cite: 2].</p>
+        <p>The <b>Sterile Insect Technique (SIT)</b> takes a different route[cite: 2]. Male mosquitoes are reared in large numbers and sterilised, usually by radiation[cite: 2]. They are released into the wild population, where they compete for mates[cite: 2]. A wild female that mates with a sterile male lays no viable eggs[cite: 2]. Each release therefore cuts the next generation, and repeated releases can drive the population down[cite: 2].</p>
+        <p>Males do not bite, so released sterile males add no disease risk[cite: 2]. SIT is also species-specific: it only affects the species that was released[cite: 2, 3].</p>
+        <p>Field trials are slow and costly. This simulator lets researchers test release sizes and intervals on a virtual neighbourhood before committing resources[cite: 3, 4, 11]. It is a simplified teaching and research model, not a forecast for any real location[cite: 1, 4].</p>
+      </div>
+    </section>
+
+    <!-- METHODOLOGY VIEW -->
+    <section id="method" hidden>
+      <div class="prose">
+        <h2>Methodology and flowchart</h2>
+        <p>Each simulated day runs through the same seven phases[cite: 7]. Select a phase to read what the model does in it[cite: 6, 7].</p>
+      </div>
+      <div class="flow" id="flow"></div>
+      <div class="card prose" id="phase"></div>
+    </section>
+
+    <!-- PROJECT VIEW -->
+    <section id="proj" hidden>
+      <div class="two">
+        <div class="card">
+          <h3>Research team</h3>
+          <ul id="team"></ul>
+        </div>
+        <div class="card">
+          <h3>Adviser and institution</h3>
+          <p id="adv"></p>
+        </div>
+        <div class="card" style="grid-column: 1 / -1">
+          <h3>Timeline</h3>
+          <div class="tw">
+            <table id="tl"></table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="dlg">
+    <h3 id="dt"></h3>
+    <div id="db"></div>
+    <p style="text-align: right">
+      <button class="btn" id="dcopy">Copy</button> 
+      <button class="btn pri" id="dclose">Close</button>
+    </p>
+  </dialog>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

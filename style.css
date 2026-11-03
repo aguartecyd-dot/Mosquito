@@ -1,0 +1,434 @@
+/* ==========================================================================
+       Design System & Variables
+       ========================================================================== */
+    :root {
+      --bg: #EEF3F1;
+      --panel: #FAFCFB;
+      --ink: #12262A;
+      --mute: #586E72;
+      --line: #CBD8D4;
+      --acc: #0E6B63;
+      --accink: #FFFFFF;
+      --wild: #E4572E;
+      --ster: #2F6FED;
+      --hs: #2E9E5B;
+      --hi: #C2185B;
+      --hr: #8AA29D;
+
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0F1A1C;
+        --panel: #152427;
+        --ink: #E4EFEC;
+        --mute: #8FA8A3;
+        --line: #28403F;
+        --acc: #4FD1C0;
+        --accink: #0F1A1C;
+        --ster: #6EA0FF;
+        --hi: #FF5C93;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0F1A1C;
+      --panel: #152427;
+      --ink: #E4EFEC;
+      --mute: #8FA8A3;
+      --line: #28403F;
+      --acc: #4FD1C0;
+      --accink: #0F1A1C;
+      --ster: #6EA0FF;
+      --hi: #FF5C93;
+    }
+
+    /* ==========================================================================
+       Base & Typography
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px);
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.55 'Newsreader', Georgia, serif;
+    }
+
+    h1, h2, h3, button, label, .ui, th, .tab {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+    }
+
+    /* ==========================================================================
+       Header & Navigation
+       ========================================================================== */
+    header {
+      padding: 20px 20px 0;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      line-height: 1.05;
+      margin: 0 0 4px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .sub {
+      color: var(--mute);
+      margin: 0 0 14px;
+      max-width: 70ch;
+    }
+
+    nav {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tab {
+      background: none;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      color: var(--mute);
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tab[aria-selected="true"] {
+      color: var(--ink);
+      border-color: var(--acc);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       Layout & Containers
+       ========================================================================== */
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 18px 20px 60px;
+    }
+
+    section[hidden] {
+      display: none;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .card h2, .card h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    /* ==========================================================================
+       Forms & Input Controls
+       ========================================================================== */
+    fieldset {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 10px 0 0;
+      padding: 8px 0 0;
+    }
+
+    legend {
+      font: 600 0.85rem 'Bricolage Grotesque', sans-serif;
+      color: var(--mute);
+      padding-right: 8px;
+    }
+
+    .f {
+      margin: 8px 0;
+    }
+
+    .f label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      gap: 8px;
+    }
+
+    .f output {
+      font-variant-numeric: tabular-nums;
+      color: var(--acc);
+      font-weight: 600;
+    }
+
+    .f input[type="range"] {
+      width: 100%;
+      accent-color: var(--acc);
+    }
+
+    .f input[type="number"] {
+      width: 100%;
+      padding: 5px 8px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--ink);
+      border-radius: 6px;
+    }
+
+    /* ==========================================================================
+       Interactive Buttons & Toolbars
+       ========================================================================== */
+    button {
+      font-size: 0.9rem;
+    }
+
+    .btn {
+      background: var(--panel);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 13px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      border-color: var(--acc);
+    }
+
+    .btn.pri {
+      background: var(--acc);
+      color: var(--accink);
+      border-color: var(--acc);
+      font-weight: 600;
+    }
+
+    .btn[aria-pressed="true"] {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--acc);
+      outline-offset: 2px;
+    }
+
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin: 0 0 12px;
+    }
+
+    .seg {
+      display: inline-flex;
+      gap: 0;
+    }
+
+    .seg .btn {
+      border-radius: 0;
+    }
+
+    .seg .btn:first-child {
+      border-radius: 8px 0 0 8px;
+    }
+
+    .seg .btn:last-child {
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* ==========================================================================
+       Metrics, Grid Stage & Canvas
+       ========================================================================== */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .m {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 12px;
+    }
+
+    .m b {
+      display: block;
+      font: 800 1.6rem 'Bricolage Grotesque', sans-serif;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.1;
+    }
+
+    .m span {
+      font-size: 0.8rem;
+      color: var(--mute);
+    }
+
+    .stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 190px;
+      gap: 14px;
+    }
+
+    @media (max-width: 700px) {
+      .stage {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    canvas.grid {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      display: block;
+    }
+
+    .legend {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.88rem;
+    }
+
+    .legend li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 6px 0;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      flex: none;
+    }
+
+    /* ==========================================================================
+       Charts, Tables, & Modals
+       ========================================================================== */
+    .charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 14px;
+    }
+
+    .charts canvas {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 560 / 270;
+      display: block;
+    }
+
+    .sev {
+      border-left: 8px solid var(--mute);
+    }
+
+    .sev h2 {
+      font-size: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tw {
+      overflow-x: auto;
+    }
+
+    .prose {
+      max-width: 75ch;
+    }
+
+    .prose h2 {
+      font-size: 1.4rem;
+      margin-top: 1.6em;
+    }
+
+    .prose p {
+      margin: 0.7em 0;
+    }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 12px 0;
+    }
+
+    .flow .btn {
+      border-radius: 999px;
+    }
+
+    .flow .btn[aria-current="step"] {
+      background: var(--acc);
+      color: var(--accink);
+      border-color: var(--acc);
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    dialog {
+      background: var(--panel);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      max-width: min(680px, 92vw);
+    }
+
+    dialog textarea {
+      width: 100%;
+      height: 240px;
+      font: 12px monospace;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    dialog img {
+      max-width: 100%;
+    }
+
+    .note {
+      color: var(--mute);
+      font-size: 0.85rem;
+    }
